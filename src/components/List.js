@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Avatar from '@material-ui/core/Avatar';
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {getContacts, setUpdate, setSelected} from "../actions/listActions";
 
 function ContactList (props) {
     useEffect(() => {
         props.getContacts()
-    }, [])
+    })
 
     const Row = ({ index, style }) => (
-        <div className={props.listState.selected == index ? "list-item selected" : "list-item"} style={style} onClick={() => {
+        <div className={props.listState.selected === index ? "list-item selected" : "list-item"} style={style} onClick={() => {
             props.onSelect(props.listState.filtered[index])
             props.setSelected(index)
             props.setUpdate(true)

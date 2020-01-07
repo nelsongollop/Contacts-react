@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import List from './components/List'
 import NavBar from './components/NavBar'
 import Contact from "./components/Contact";
@@ -61,7 +61,7 @@ const App = (props) => {
                     <List onSelect={select}/>
                 </div>
                 <div className="col-md-6 no-padding vertical-center">
-                    {Object.keys(selected).length == 0 ?
+                    {Object.keys(selected).length === 0 ?
                         <Unselected/> :
                         <Contact onSubmit={onSubmit} selected={selected} update={props.state.update}/>
                     }

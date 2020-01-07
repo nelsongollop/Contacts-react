@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,9 +14,9 @@ const renderTextField = ({input, meta, label}) => (
         fullWidth={true}
         helperText={meta.touched ? meta.error : ""}
         FormHelperTextProps={{error: true}}
-        onKeyPress={e => {{
+        onKeyPress={e => {
             if (e.key === 'Enter') e.preventDefault();
-        }}}
+        }}
     />
 )
 
