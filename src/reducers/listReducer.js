@@ -1,4 +1,4 @@
-const ListReducer = (state = {list: [], filtered: [], update: undefined}, action) => {
+const ListReducer = (state = {list: [], filtered: [], update: undefined, selected: -1}, action) => {
     switch (action.type) {
         case "GET_CONTACTS_FULFILLED":
             state = {
@@ -25,6 +25,12 @@ const ListReducer = (state = {list: [], filtered: [], update: undefined}, action
             state = {
                 ...state,
                 update: action.payload
+            }
+            break;
+        case "SET_SELECTED":
+            state = {
+                ...state,
+                selected: action.payload
             }
             break;
         default:

@@ -31,3 +31,9 @@ export function setUpdate(update){
     }
 }
 
+export function setSelected(index){
+    return{
+        type: "SET_SELECTED",
+        payload: index
+    }
+}

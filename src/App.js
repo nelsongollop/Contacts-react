@@ -18,15 +18,29 @@ const App = (props) => {
     }
 
     const onSubmit = values => {
-        axios.post('http://localhost:3001/api/v1/contacts', values)
-            .then(
-                (result) => {
-                    props.getContacts()
-                    setOpen(true)
-                    setSelected({})
-                },
-                (error) => console.log(error)
-            )
+        console.log(values)
+        if (values.id){
+            axios.put(`http://localhost:3001/api/v1/contacts/${values.id}`, values)
+                .then(
+                    (result) => {
+                        props.getContacts()
+                        setOpen(true)
+                        setSelected({})
+                    },
+                    (error) => console.log(error)
+                )
+
+        } else {
+            axios.post("http://localhost:3001/api/v1/contacts", values)
+                .then(
+                    (result) => {
+                        props.getContacts()
+                        setOpen(true)
+                        setSelected({})
+                    },
+                    (error) => console.log(error)
+                )
+        }
     }
 
     const handleClose = (event, reason) => {
@@ -49,7 +63,7 @@ const App = (props) => {
                 <div className="col-md-6 no-padding vertical-center">
                     {Object.keys(selected).length == 0 ?
                         <Unselected/> :
-                        <Contact onSubmit={onSubmit} selected={selected}/>
+                        <Contact onSubmit={onSubmit} selected={selected} update={props.state.update}/>
                     }
                 </div>
             </div>
@@ -66,6 +80,12 @@ const App = (props) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return{
+        state: state.list
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         getContacts: () => {
@@ -74,4 +94,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

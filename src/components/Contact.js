@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from '@material-ui/core/Button'
+import {connect} from 'react-redux'
 
 const renderTextField = ({input, meta, label}) => (
     <TextField
@@ -23,6 +24,7 @@ let ContactForm = props => {
     const { handleSubmit } = props
     useEffect(() => {
         props.initialize(props.selected)
+        props.change('id', props.selected.id)
     }, [props.selected])
 
     return (
@@ -39,7 +41,7 @@ let ContactForm = props => {
                         <Field name="email" component={renderTextField} label="Email"/>
 
                         <Button className="float-right mt-5" variant="contained" color="secondary" type="submit">
-                            {props.selected ? "Update" : "Create"}
+                            {props.state.update ? "Update" : "Create"}
                         </Button>
                     </form>
                 </div>
@@ -52,4 +54,10 @@ ContactForm = reduxForm({
     form: 'contact'
 })(ContactForm)
 
-export default ContactForm
+const mapStateToProps = (state) => {
+    return {
+        state : state.list
+    }
+}
+
+export default connect(mapStateToProps)(ContactForm)
