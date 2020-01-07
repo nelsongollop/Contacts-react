@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {Button, InputBase} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search"
 import {connect} from "react-redux";
-import {filter} from '../actions/listActions'
+import {filter, setUpdate} from '../actions/listActions'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -54,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
+    const empty = {first_name: '', last_name:'', phone: '', email: ''}
 
     return (
         <div className={classes.root}>
@@ -77,7 +78,10 @@ const NavBar = (props) => {
                         />
                     </div>
                     <div className={classes.title}/>
-                    <Button variant="contained" color="secondary">
+                    <Button variant="contained" color="secondary" onClick={() => {
+                        props.onNew(empty)
+                        props.setUpdate(true)
+                    }}>
                         New Contact
                     </Button>
                 </Toolbar>
@@ -90,6 +94,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         filter: (keyword) => {
             dispatch(filter(keyword))
+        },
+        setUpdate: (update) => {
+            dispatch(setUpdate(update))
         }
     }
 }

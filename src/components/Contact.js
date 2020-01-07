@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
+import Button from '@material-ui/core/Button'
 
-const renderTextField = ({input, meta, label, edit}) => (
+const renderTextField = ({input, meta, label}) => (
     <TextField
         {...input}
         id="standard-name"
         label={label}
         margin="normal"
         fullWidth={true}
-        inputProps={{readOnly: edit}}
         helperText={meta.touched ? meta.error : ""}
         FormHelperTextProps={{error: true}}
         onKeyPress={e => {{
@@ -21,9 +21,7 @@ const renderTextField = ({input, meta, label, edit}) => (
 
 let ContactForm = props => {
     const { handleSubmit } = props
-    const [readOnly, setReadOnly] = useState(false)
     useEffect(() => {
-        console.log("prop updated")
         props.initialize(props.selected)
     }, [props.selected])
 
@@ -35,12 +33,14 @@ let ContactForm = props => {
             <div className="row justify-content-md-center">
                 <div className="col-md-8">
                     <form onSubmit={handleSubmit}>
-                        <Field name="first_name" component={renderTextField} label="First Name" edit={readOnly}/>
-                        <Field name="last_name" component={renderTextField} label="Last Name" edit={readOnly}/>
-                        <Field name="phone" component={renderTextField} label="Phone" edit={readOnly}/>
-                        <Field name="email" component={renderTextField} label="Email" edit={readOnly}/>
+                        <Field name="first_name" component={renderTextField} label="First Name"/>
+                        <Field name="last_name" component={renderTextField} label="Last Name"/>
+                        <Field name="phone" component={renderTextField} label="Phone"/>
+                        <Field name="email" component={renderTextField} label="Email"/>
 
-                        <button type="submit">Submit</button>
+                        <Button className="float-right mt-5" variant="contained" color="secondary" type="submit">
+                            {props.selected ? "Update" : "Create"}
+                        </Button>
                     </form>
                 </div>
             </div>

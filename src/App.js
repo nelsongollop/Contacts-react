@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
-import List from './Components/List'
-import NavBar from './Components/NavBar'
-import Contact from "./Components/Contact";
+import List from './components/List'
+import NavBar from './components/NavBar'
+import Contact from "./components/Contact";
 import axios from 'axios'
-import Unselected from "./Components/dumb/unselected";
-import {filter} from "./actions/listActions";
+import Unselected from "./components/dumb/unselected";
 import {connect} from "react-redux";
 import {getContacts} from "./actions/listActions";
 import {Snackbar} from "@material-ui/core";
@@ -14,7 +13,7 @@ const App = (props) => {
     const [selected, setSelected] = useState({})
     const [snackOpen, setOpen] = useState(false)
 
-    const select = (contact) =>{
+    const select = (contact) => {
         setSelected(contact)
     }
 
@@ -39,9 +38,9 @@ const App = (props) => {
     };
 
     return(
-        <div className="container-fluid h-100">
+        <div className="container-fluid h-100 d-flex flex-column">
             <div className="row">
-                <NavBar/>
+                <NavBar onNew={select}/>
             </div>
             <div className="row h-100">
                 <div className="col-md-6 no-padding d-flex">

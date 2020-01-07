@@ -24,10 +24,10 @@ export function filter(keywords) {
     }
 }
 
-export function addContact(contact){
+export function setUpdate(update){
     return{
-        type: "ADD_CONTACT",
-        payload: contact
+        type: "SET_UPDATE",
+        payload: update
     }
 }
 

@@ -8,9 +8,6 @@ import {getContacts} from "../actions/listActions";
 
 function ContactList (props) {
     const [selected, setSelected] = useState(-1);
-    const [contacts, setContacts] = useState([])
-    const [errors, setErrors] = useState([])
-
     useEffect(() => {
         props.getContacts()
     }, [])
