@@ -5,17 +5,12 @@ import Contact from "./components/Contact";
 import axios from 'axios'
 import Unselected from "./components/dumb/unselected";
 import {connect} from "react-redux";
-import {getContacts} from "./actions/listActions";
+import {getContacts, setSelected} from "./actions/listActions";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 
 const App = (props) => {
-    const [selected, setSelected] = useState({})
     const [snackOpen, setOpen] = useState(false)
-
-    const select = (contact) => {
-        setSelected(contact)
-    }
 
     const onSubmit = values => {
         console.log(values)
@@ -25,7 +20,7 @@ const App = (props) => {
                     (result) => {
                         props.getContacts()
                         setOpen(true)
-                        setSelected({})
+                        props.setSelected(null)
                     },
                     (error) => console.log(error)
                 )
@@ -36,7 +31,7 @@ const App = (props) => {
                     (result) => {
                         props.getContacts()
                         setOpen(true)
-                        setSelected({})
+                        props.setSelected(null)
                     },
                     (error) => console.log(error)
                 )
@@ -54,16 +49,16 @@ const App = (props) => {
     return(
         <div className="container-fluid h-100 d-flex flex-column">
             <div className="row">
-                <NavBar onNew={select}/>
+                <NavBar/>
             </div>
             <div className="row h-100">
                 <div className="col-md-6 no-padding d-flex">
-                    <List onSelect={select}/>
+                    <List/>
                 </div>
                 <div className="col-md-6 no-padding vertical-center">
-                    {Object.keys(selected).length === 0 ?
-                        <Unselected/> :
-                        <Contact onSubmit={onSubmit} selected={selected} update={props.state.update}/>
+                    {props.state.update != null ?
+                        <Contact onSubmit={onSubmit} update={props.state.update}/> :
+                        <Unselected/>
                     }
                 </div>
             </div>
@@ -90,6 +85,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getContacts: () => {
             dispatch(getContacts())
+        },
+        setSelected: (index) => {
+            dispatch(setSelected(index))
         }
     }
 }

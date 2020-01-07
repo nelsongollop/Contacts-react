@@ -23,9 +23,9 @@ const renderTextField = ({input, meta, label}) => (
 let ContactForm = props => {
     const { handleSubmit } = props
     useEffect(() => {
-        props.initialize(props.selected)
-        props.change('id', props.selected.id)
-    }, [props.selected])
+        props.initialize(props.state.selected)
+        props.change('id', props.state.selected.id)
+    }, [props.state.selectedIndex])
 
     return (
         <div className="container">

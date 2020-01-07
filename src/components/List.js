@@ -8,11 +8,10 @@ import {getContacts, setUpdate, setSelected} from "../actions/listActions";
 function ContactList (props) {
     useEffect(() => {
         props.getContacts()
-    })
+    }, [])
 
     const Row = ({ index, style }) => (
-        <div className={props.listState.selected === index ? "list-item selected" : "list-item"} style={style} onClick={() => {
-            props.onSelect(props.listState.filtered[index])
+        <div className={props.listState.selectedIndex === index ? "list-item selected" : "list-item"} style={style} onClick={() => {
             props.setSelected(index)
             props.setUpdate(true)
         }}>

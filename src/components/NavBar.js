@@ -79,9 +79,8 @@ const NavBar = (props) => {
                     </div>
                     <div className={classes.title}/>
                     <Button variant="contained" color="secondary" onClick={() => {
-                        props.onNew(empty)
                         props.setUpdate(false)
-                        props.setSelected(-1)
+                        props.setSelected(null)
                     }}>
                         New Contact
                     </Button>
