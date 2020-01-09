@@ -8,6 +8,9 @@ import SearchIcon from "@material-ui/icons/Search"
 import {connect} from "react-redux";
 import {filter, setUpdate, setSelected} from '../actions/listActions'
 
+// Standard appbar from material-ui. Only changes are the redux connect so I can
+// filter when typing in the search and the new Contact button event
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -54,7 +57,6 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
-    const empty = {first_name: '', last_name:'', phone: '', email: ''}
 
     return (
         <div className={classes.root}>

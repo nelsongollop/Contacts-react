@@ -2,35 +2,37 @@ import React, {useState} from "react";
 import List from './components/List'
 import NavBar from './components/NavBar'
 import Contact from "./components/Contact";
-import axios from 'axios'
 import Unselected from "./components/dumb/unselected";
 import {connect} from "react-redux";
-import {getContacts, setSelected} from "./actions/listActions";
+import {getContacts, setSelected, setUpdate} from "./actions/listActions";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
+import * as API from './api/requests'
 
 const App = (props) => {
     const [snackOpen, setOpen] = useState(false)
 
+    //submit callback function passed as prop to the form
     const onSubmit = values => {
         console.log(values)
-        if (values.id){
-            axios.put(`http://localhost:3001/api/v1/contacts/${values.id}`, values)
+        if (props.state.update){
+            API.updateContact(values)
                 .then(
                     (result) => {
                         props.getContacts()
                         setOpen(true)
+                        props.setUpdate(null)
                         props.setSelected(null)
                     },
                     (error) => console.log(error)
                 )
-
         } else {
-            axios.post("http://localhost:3001/api/v1/contacts", values)
+            API.createContact(values)
                 .then(
                     (result) => {
                         props.getContacts()
                         setOpen(true)
+                        props.setUpdate(null)
                         props.setSelected(null)
                     },
                     (error) => console.log(error)
@@ -88,7 +90,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         setSelected: (index) => {
             dispatch(setSelected(index))
-        }
+        },
+        setUpdate: (update) => {
+            dispatch(setUpdate(update))
+        },
     }
 }
 

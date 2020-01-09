@@ -1,10 +1,27 @@
-import axios from "axios";
+import * as API from '../api/requests'
 
 export function getContacts () {
     return{
         type: "GET_CONTACTS",
         payload: new Promise((resolve, reject) => {
-            axios.get('http://localhost:3001/api/v1/contacts')
+            API.getContacts()
+                .then(
+                    (result) => {
+                        resolve(result.data)
+                    },
+                    (error) => {
+                        reject(error)
+                    }
+                )
+        })
+    }
+}
+
+export function deleteContact (id) {
+    return{
+        type: "GET_CONTACTS",
+        payload: new Promise((resolve, reject) => {
+            API.deleteContact(id)
                 .then(
                     (result) => {
                         resolve(result.data)

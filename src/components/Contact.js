@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from '@material-ui/core/Button'
 import {connect} from 'react-redux'
+import {required, email} from "../helpers/validators";
 
 const renderTextField = ({input, meta, label}) => (
     <TextField
@@ -23,8 +24,8 @@ const renderTextField = ({input, meta, label}) => (
 let ContactForm = props => {
     const { handleSubmit } = props
     useEffect(() => {
-        props.initialize(props.state.selected)
-        props.change('id', props.state.selected.id)
+        props.initialize(props.state.selected) //fill form with selected
+        props.change('id', props.state.selected.id) //autofill id field so we can update
     }, [props.state.selectedIndex])
 
     return (
@@ -35,14 +36,15 @@ let ContactForm = props => {
             <div className="row justify-content-md-center">
                 <div className="col-md-8">
                     <form onSubmit={handleSubmit}>
-                        <Field name="first_name" component={renderTextField} label="First Name"/>
-                        <Field name="last_name" component={renderTextField} label="Last Name"/>
-                        <Field name="phone" component={renderTextField} label="Phone"/>
-                        <Field name="email" component={renderTextField} label="Email"/>
+                        <Field name="first_name" component={renderTextField} label="First Name" validate={required}/>
+                        <Field name="last_name" component={renderTextField} label="Last Name" validate={required}/>
+                        <Field name="phone" component={renderTextField} label="Phone" validate={required}/>
+                        <Field name="email" component={renderTextField} label="Email" validate={[required, email]}/>
 
                         <Button className="float-right mt-5" variant="contained" color="secondary" type="submit">
                             {props.state.update ? "Update" : "Create"}
                         </Button>
+
                     </form>
                 </div>
             </div>
