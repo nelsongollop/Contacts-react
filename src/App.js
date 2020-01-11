@@ -10,7 +10,21 @@ import {Alert} from "@material-ui/lab";
 import * as API from './api/requests'
 
 const App = (props) => {
-    const [snackOpen, setOpen] = useState({open: false, error: false})
+    const [snackOpen, setOpen] = useState({open: false, error: false, message:""})
+
+    const handleError = (error) => {
+        if (error.response.status == '422') {
+            setOpen({open: true, error: true, message: "There's already a user with that email"})
+        } else {
+            setOpen({open: true, error: true, message: "An error occurred"})
+        }
+    }
+    const handleSuccess = (result, message) => {
+        props.setContacts(result.data)
+        props.setSelected(null)
+        setOpen({open: true, error: false, message: `Your contact was successfully ${message}`})
+        props.setUpdate(null)
+    }
 
     //submit callback function passed as prop to the form
     const onSubmit = values => {
@@ -18,23 +32,21 @@ const App = (props) => {
             API.updateContact(values)
                 .then(
                     (result) => {
-                        props.setContacts(result.data)
-                        props.setSelected(null)
-                        setOpen({open: true, error: false})
-                        props.setUpdate(null)
+                        handleSuccess(result, "updated")
                     },
-                    (error) => setOpen({open: true, error: true})
+                    (error) => {
+                        handleError(error)
+                    }
                 )
         } else {
             API.createContact(values)
                 .then(
                     (result) => {
-                        props.setContacts(result.data)
-                        props.setSelected(null)
-                        setOpen({open: true, error: false})
-                        props.setUpdate(null)
+                        handleSuccess(result, "created")
                     },
-                    (error) => setOpen({open: true, error: true})
+                    (error) => {
+                        handleError(error)
+                    }
                 )
         }
     }
@@ -43,7 +55,6 @@ const App = (props) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen({open: false});
     };
 
@@ -69,11 +80,7 @@ const App = (props) => {
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
                 <Alert onClose={handleClose} color={snackOpen.error ? "error" : "success"}>
-                    {snackOpen.error ? "There was an error" :
-                    props.state.update ?
-                    "Your contact was successfully added" :
-                    "Your contact was succesfully updated"}
-
+                    {snackOpen.message}
                 </Alert>
             </Snackbar>
         </div>

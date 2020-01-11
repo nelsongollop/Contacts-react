@@ -85,4 +85,22 @@ describe('list reducer', () => {
             }
         )
     })
+    it('should handle SET_CONTACTS', () => {
+        let newList = [
+            {id: '0', first_name: 'Daenerys', last_name: 'Targaryen', phone: '123', email: 'a@a.com'},
+            {id: '1', first_name: 'Jhon', last_name: 'Snow', phone: '123', email: 'a@a.com'},
+            {id: '2', first_name: 'Arya', last_name: 'Stark', phone: '123', email: 'a@a.com'}
+        ]
+        expect(
+            reducer({list: mockList}, {
+                type: 'SET_CONTACTS',
+                payload: newList
+            })
+            ).toEqual(
+            {
+                list: newList,
+                filtered: newList
+            }
+        )
+    })
 })
