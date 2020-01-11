@@ -25,7 +25,9 @@ let ContactForm = props => {
     const { handleSubmit } = props
     useEffect(() => {
         props.initialize(props.state.selected) //fill form with selected
-        props.change('id', props.state.selected.id) //autofill id field so we can update
+        if (props.state.selected){
+            props.change('id', props.state.selected.id) //autofill id field so we can update
+        }
     }, [props.state.selectedIndex])
 
     return (

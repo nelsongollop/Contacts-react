@@ -18,13 +18,8 @@ const ListReducer = (state = {
                 String(obj[key]).toLowerCase().includes(action.payload.toLowerCase())));
             state = {
                 ...state,
-                filtered
-            }
-            break;
-        case "ADD_CONTACT":
-            state = {
-                ...state,
-                list: [...state.list, action.payload]
+                filtered,
+                selectedIndex: null
             }
             break;
         case "SET_UPDATE":
@@ -37,11 +32,18 @@ const ListReducer = (state = {
             state = {
                 ...state,
                 selectedIndex: action.payload,
-                selected: action.payload ? state.list[action.payload] : {}
+                selected: action.payload != null ? state.filtered[action.payload] : {}
+            }
+            break;
+        case "SET_CONTACTS":
+            state = {
+                ...state,
+                list: action.payload,
+                filtered: action.payload
             }
             break;
         default:
-            break;
+            return state
 
     }
     return state

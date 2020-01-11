@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact component with no selected contact in reducer state should render a contact form 1`] = `ReactWrapper {}`;
+
+exports[`Contact component with no selected contact in reducer state should render a list 1`] = `ReactWrapper {}`;
+
+exports[`Contact component with no selected contact in reducer state should render a new contact form 1`] = `ReactWrapper {}`;

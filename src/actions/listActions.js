@@ -54,3 +54,10 @@ export function setSelected(index){
         payload: index
     }
 }
+
+export function setContacts(list){
+    return{
+        type: "SET_CONTACTS",
+        payload: list
+    }
+}
